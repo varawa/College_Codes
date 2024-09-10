@@ -220,3 +220,122 @@ Real-time systems are operating systems designed to process data and provide out
 
 ### Summary
 Real-time systems are essential for applications where timing and predictability are critical. They are designed to process inputs and provide outputs within strict time constraints, ensuring that tasks are completed reliably and on time. These systems are used extensively in industries where safety, efficiency, and responsiveness are paramount.
+
+
+
+
+
+
+### What does virtual memory do?
+
+### Virtual Memory in Operating Systems
+
+Virtual memory is a memory management technique that creates an illusion of a large, contiguous memory space for applications, even if the physical memory (RAM) is limited. It enables systems to handle more processes and larger programs efficiently. Here's how it works and what it does:
+
+### Key Functions
+
+1. **Extended Address Space**:
+   - **Definition**: Provides applications with a large, continuous address space that exceeds the actual physical memory available.
+   - **Benefit**: Allows programs to use more memory than physically installed, improving the ability to run large applications or multiple applications simultaneously.
+
+2. **Paging and Segmentation**:
+   - **Paging**: Divides the virtual address space into fixed-size pages and maps them to physical memory frames. This enables efficient use of memory and simplifies memory management.
+   - **Segmentation**: Divides memory into variable-sized segments, each representing different logical units of a program, such as code, data, or stack.
+
+3. **Swapping**:
+   - **Definition**: Moves data between physical memory and a storage device (usually a hard disk or SSD) when physical memory is full.
+   - **Benefit**: Allows the system to handle more processes than can fit into physical memory by temporarily storing less frequently used data on disk.
+
+4. **Isolation and Protection**:
+   - **Definition**: Provides each process with its own virtual address space, isolating it from other processes.
+   - **Benefit**: Protects processes from interfering with each other and prevents unauthorized access to memory.
+
+5. **Efficient Memory Utilization**:
+   - **Definition**: Utilizes physical memory more efficiently by only loading necessary pages or segments into RAM and keeping the rest on disk.
+   - **Benefit**: Optimizes the use of physical memory and reduces the likelihood of running out of RAM.
+
+### Advantages
+
+1. **Increased Flexibility**:
+   - **Application Size**: Applications can be larger and more complex since they are not limited by physical memory constraints.
+   - **Multiple Applications**: Multiple applications can run simultaneously without requiring each to fit entirely into physical memory.
+
+2. **Improved System Stability**:
+   - **Isolation**: Processes are isolated from each other, which helps prevent one process from crashing or corrupting another.
+   - **Security**: Improves security by preventing unauthorized access to memory spaces of other processes.
+
+3. **Simplified Memory Management**:
+   - **Abstraction**: Simplifies programming by providing a uniform address space and managing the details of physical memory allocation.
+
+### Disadvantages
+
+1. **Performance Overhead**:
+   - **Swapping Costs**: Moving data between physical memory and disk can introduce latency and reduce system performance.
+   - **Page Faults**: Frequent page faults (when the system must retrieve data from disk) can slow down performance.
+
+2. **Disk Space Usage**:
+   - **Storage Requirements**: Requires sufficient disk space to store the swapped-out data, which can be a concern for systems with limited storage capacity.
+
+### Examples
+
+- **Modern Operating Systems**: Most contemporary operating systems, such as Windows, Linux, and macOS, use virtual memory techniques to manage system memory efficiently.
+
+### Summary
+
+Virtual memory enhances an operating system's capability by allowing applications to use more memory than physically available, improving system stability, and providing better isolation and protection between processes. While it introduces some performance overhead due to swapping and additional management, the benefits in terms of flexibility and efficient memory utilization make it a fundamental component of modern operating systems.
+
+
+
+### Dual Mode Operation- 
+
+Dual mode operation allows OS to protect itself and other system components.
+1. User Mode   
+2. Kernel Mode
+
+# Mode Bit-
+    Its provided by the hardware.
+    Provides ability to distinguish between when the user code is running and when the kernel code is running.
+    a. User code running -> mode bit is "user"(1)
+    b. kernel code running -> mode bit is "kernel"(0)
+
+System call changes mode to kernel, return from call and resets to user.
+
+
+
+
+
+
+
+### Process Management-
+
+1. A process is a program in execution.
+    Program- Passive entity.
+    Process- Active entity.
+2. Process needs resources to accomplish its task-
+    CPU, memory, I/O, Files
+    Initialization data
+3. Process termination requires reclaim of any reusable resources.
+
+4. Single threaded process has one program counter(PC) specifying the location of next instruction to br=e executed.
+
+5. Multi-threaded has one Program counter per thread.
+
+6. Typically, system has many processes. 
+    a. some User
+    b. some OS running concurrently on one or more CPU.
+
+
+
+
+
+
+
+### Process Management Activities
+
+OS is responsible for these activities-
+
+1. Creating/deleting both user and system processes.
+2. Suspending and resuming processes.
+3. Providing mechanisms for process synchronization.
+4. Providing mechanisms for process communication.
+5. Providing mechanisms for deadlock handling.
