@@ -61,3 +61,34 @@ Computer System Organization-
 
         Device controller informs CPU that it has finished its operation by causing an interrupt.
 
+Storage Structure- 
+    1. Main Memory  (Typically volatile)
+    2. Secondary Memory (NonVolatile)
+        HDD(Hard Disk Drivers)
+        NVM(Non-Volatile Memory Devices, faster than hard disk, flash memory is an example)
+
+Storage Definition and Notation Review-
+    1. Basic Unit- Bit(either 0 or 1)
+    2. All other storage in a computer is this combination of these 0s and 1s.
+    3. Be it numbers, letters, movies, music all this can be stored as os and 1s combinations.
+    4. A byte- 8 bit (smallest chunk of storage on most computers)
+    5. A word- made up of 1 or more bytes, a computer executes many operations in its native "word" instead of a byte.
+    6.  1KB = 1024 bytes
+        1MB = 1024^2 bytes
+        then GB, TB, PB .
+
+Storage devices heirarchy- 
+
+    Registers
+        |
+        Cache
+            |
+            Main Memory
+                    |
+                    NonVolatile Memory
+                                    |
+                                    Hard Disk drivers
+                                                    |
+                                                    Optical disk
+                                                                |
+                                                                magnetic tapes
