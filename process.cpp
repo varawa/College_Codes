@@ -58,7 +58,7 @@ void SJF_NonPreemptive(vector<Process>& processes) {
             if (!processes[i].completed) {
                 allCompleted = false;  
                 if (processes[i].arrivalTime <= currentTime && processes[i].burstTime < minBurstTime) {
-                    idx = i; // Get the process index
+                    idx = i;
                     minBurstTime = processes[i].burstTime;
                 }
             }
@@ -70,13 +70,13 @@ void SJF_NonPreemptive(vector<Process>& processes) {
             processes[idx].completionTime = currentTime;
             processes[idx].completed = true;
         } else {
-            currentTime++; // Idle time
+            currentTime++;//idle
         }
     }
     cout << "|\n";
 }
 
-// Shortest Job First (Preemptive)
+
 void SJF_Preemptive(vector<Process>& processes) {
     cout << "\nSJF Preemptive Scheduling:\n";
     int currentTime = 0;
@@ -90,7 +90,7 @@ void SJF_Preemptive(vector<Process>& processes) {
             if (!processes[i].completed) {
                 allCompleted = false;
                 if (processes[i].arrivalTime <= currentTime && processes[i].remainingTime > 0 && processes[i].remainingTime < minBurstTime) {
-                    idx = i; // Get the process index
+                    idx = i; 
                     minBurstTime = processes[i].remainingTime;
                 }
             }
@@ -101,17 +101,17 @@ void SJF_Preemptive(vector<Process>& processes) {
             currentTime++;
             processes[idx].remainingTime--;
             if (processes[idx].remainingTime == 0) {
-                processes[idx].completionTime = currentTime; // Update completion time
+                processes[idx].completionTime = currentTime; 
                 processes[idx].completed = true;
             }
         } else {
-            currentTime++; // Idle time
+            currentTime++; 
         }
     }
     cout << "|\n";
 }
 
-// Priority Scheduling (Non-Preemptive)
+
 void Priority_NonPreemptive(vector<Process>& processes) {
     cout << "\nPriority Non-Preemptive Scheduling:\n";
     int currentTime = 0;
@@ -123,9 +123,9 @@ void Priority_NonPreemptive(vector<Process>& processes) {
 
         for (int i = 0; i < processes.size(); i++) {
             if (!processes[i].completed) {
-                allCompleted = false;  // Found at least one incomplete process
+                allCompleted = false;  
                 if (processes[i].arrivalTime <= currentTime && processes[i].priority < highestPriority) {
-                    idx = i; // Get the process index
+                    idx = i; 
                     highestPriority = processes[i].priority;
                 }
             }
@@ -133,18 +133,17 @@ void Priority_NonPreemptive(vector<Process>& processes) {
 
         if (idx != -1) {
             visualizeSchedule(currentTime, processes[idx].id);
-            currentTime += processes[idx].burstTime; // Increment time by burst time
-            processes[idx].completionTime = currentTime; // Update completion time
-            processes[idx].completed = true; // Mark process as completed
+            currentTime += processes[idx].burstTime; 
+            processes[idx].completionTime = currentTime; 
+            processes[idx].completed = true; 
         } else {
-            currentTime++; // Idle time
+            currentTime++; 
         }
     }
     cout << "|\n";
 }
 
 
-// Priority Scheduling (Preemptive)
 void Priority_Preemptive(vector<Process>& processes) {
     cout << "\nPriority Preemptive Scheduling:\n";
     int currentTime = 0;
@@ -158,7 +157,7 @@ void Priority_Preemptive(vector<Process>& processes) {
             if (!processes[i].completed) {
                 allCompleted = false;
                 if (processes[i].arrivalTime <= currentTime && processes[i].remainingTime > 0 && processes[i].priority < highestPriority) {
-                    idx = i; // Get the process index
+                    idx = i; 
                     highestPriority = processes[i].priority;
                 }
             }
@@ -169,17 +168,17 @@ void Priority_Preemptive(vector<Process>& processes) {
             currentTime++;
             processes[idx].remainingTime--;
             if (processes[idx].remainingTime == 0) {
-                processes[idx].completionTime = currentTime; // Update completion time
+                processes[idx].completionTime = currentTime; 
                 processes[idx].completed = true;
             }
         } else {
-            currentTime++; // Idle time
+            currentTime++; 
         }
     }
     cout << "|\n";
 }
 
-// Calculate Turnaround and Waiting times
+
 void calculateTimes(vector<Process>& processes) {
     for (int i = 0; i < processes.size(); i++) {
         processes[i].turnAroundTime = processes[i].completionTime - processes[i].arrivalTime;
@@ -187,7 +186,7 @@ void calculateTimes(vector<Process>& processes) {
     }
 }
 
-// Display process details
+
 void displayProcesses(const vector<Process>& processes) {
     cout << "\nProcess\tArrival\tBurst\tPriority\tCompletion\tTurnaround\tWaiting\n";
     for (int i = 0; i < processes.size(); i++) {
@@ -215,50 +214,46 @@ int main() {
         processes.emplace_back(i + 1, arrivalTime, burstTime, priority);
     }
 
-    // FCFS Scheduling
     FCFS(processes);
     calculateTimes(processes);
     displayProcesses(processes);
 
-    // Resetting the processes for next scheduling
     for (int i = 0; i < processes.size(); i++) {
         processes[i].completed = false;
         processes[i].remainingTime = processes[i].burstTime;
     }
 
-    // SJF Non-Preemptive Scheduling
+  
     SJF_NonPreemptive(processes);
     calculateTimes(processes);
     displayProcesses(processes);
 
-    // Resetting for SJF Preemptive
+    
     for (int i = 0; i < processes.size(); i++) {
         processes[i].completed = false;
         processes[i].remainingTime = processes[i].burstTime;
     }
 
-    // SJF Preemptive Scheduling
     SJF_Preemptive(processes);
     calculateTimes(processes);
     displayProcesses(processes);
 
-    // Resetting for Priority Non-Preemptive
+   
     for (int i = 0; i < processes.size(); i++) {
         processes[i].completed = false;
     }
 
-    // Priority Non-Preemptive Scheduling
+    
     Priority_NonPreemptive(processes);
     calculateTimes(processes);
     displayProcesses(processes);
 
-    // Resetting for Priority Preemptive
+    
     for (int i = 0; i < processes.size(); i++) {
         processes[i].completed = false;
         processes[i].remainingTime = processes[i].burstTime;
     }
 
-    // Priority Preemptive Scheduling
     Priority_Preemptive(processes);
     calculateTimes(processes);
     displayProcesses(processes);
