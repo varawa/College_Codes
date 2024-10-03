@@ -22,7 +22,7 @@ public class BankersAlgorithmGanttChart extends JPanel {
         
         calculateNeed();
         calculateMaxTime();
-        setPreferredSize(new Dimension(800, 400));
+        setPreferredSize(new Dimension(800, 600)); // Increased height to accommodate table
     }
 
     private void calculateNeed() {
@@ -61,7 +61,6 @@ public class BankersAlgorithmGanttChart extends JPanel {
             boolean foundSafeProcess = false;
             for (int i = 0; i < numProcesses; i++) {
                 if (!finished[i] && isSafe(i, work)) {
-                    // Simulate execution of process i
                     for (int j = 0; j < numResources; j++) {
                         work[j] += allocation[i][j];
                     }
@@ -72,10 +71,10 @@ public class BankersAlgorithmGanttChart extends JPanel {
                 }
             }
             if (!foundSafeProcess) {
-                return false; // No safe sequence found
+                return false;
             }
         }
-        return true; // Safe sequence found
+        return true;
     }
 
     @Override
@@ -93,9 +92,16 @@ public class BankersAlgorithmGanttChart extends JPanel {
         // Draw title
         g2d.setFont(new Font("Arial", Font.BOLD, 24));
         g2d.setColor(new Color(44, 62, 80));
-        g2d.drawString("Banker's Algorithm Gantt Chart", getWidth() / 2 - 150, 40);
+        g2d.drawString("Banker's Algorithm Visualization", getWidth() / 2 - 150, 40);
 
-        // Draw process bars
+        // Draw Gantt Chart
+        drawGanttChart(g2d, startX, startY, processHeight, timeUnitWidth);
+
+        // Draw Resource Table
+        drawResourceTable(g2d, startX, startY + (numProcesses * (processHeight + 20)) + 60);
+    }
+
+    private void drawGanttChart(Graphics2D g2d, int startX, int startY, int processHeight, int timeUnitWidth) {
         g2d.setFont(new Font("Arial", Font.PLAIN, 14));
         int yPosition = startY;
         Color[] colors = {new Color(231, 76, 60), new Color(52, 152, 219), new Color(46, 204, 113), 
@@ -140,6 +146,49 @@ public class BankersAlgorithmGanttChart extends JPanel {
         }
     }
 
+    private void drawResourceTable(Graphics2D g2d, int startX, int startY) {
+        g2d.setFont(new Font("Arial", Font.BOLD, 16));
+        g2d.setColor(new Color(44, 62, 80));
+        g2d.drawString("Resource Allocation Table", startX, startY);
+
+        g2d.setFont(new Font("Arial", Font.PLAIN, 14));
+        int rowHeight = 25;
+        int colWidth = 120;
+
+        String[] headers = {"Process", "Allocation", "Max", "Need", "Available"};
+        for (int i = 0; i < headers.length; i++) {
+            g2d.drawString(headers[i], startX + i * colWidth, startY + rowHeight);
+        }
+
+        for (int i = 0; i < numProcesses; i++) {
+            g2d.drawString("P" + i, startX, startY + (i + 2) * rowHeight);
+            g2d.drawString(Arrays.toString(allocation[i]), startX + colWidth, startY + (i + 2) * rowHeight);
+            g2d.drawString(Arrays.toString(max[i]), startX + 2 * colWidth, startY + (i + 2) * rowHeight);
+            g2d.drawString(Arrays.toString(need[i]), startX + 3 * colWidth, startY + (i + 2) * rowHeight);
+            if (i == 0) {
+                g2d.drawString(Arrays.toString(available), startX + 4 * colWidth, startY + (i + 2) * rowHeight);
+            }
+        }
+
+        // Draw total row
+        g2d.setFont(new Font("Arial", Font.BOLD, 14));
+        int totalRowY = startY + (numProcesses + 2) * rowHeight;
+        g2d.drawString("Total", startX, totalRowY);
+        g2d.drawString(sumArray(allocation), startX + colWidth, totalRowY);
+        g2d.drawString(sumArray(max), startX + 2 * colWidth, totalRowY);
+        g2d.drawString(sumArray(need), startX + 3 * colWidth, totalRowY);
+    }
+
+    private String sumArray(int[][] array) {
+        int[] sum = new int[array[0].length];
+        for (int[] row : array) {
+            for (int i = 0; i < row.length; i++) {
+                sum[i] += row[i];
+            }
+        }
+        return Arrays.toString(sum);
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
@@ -177,7 +226,8 @@ public class BankersAlgorithmGanttChart extends JPanel {
         
         if (chart.runBankersAlgorithm()) {
             System.out.println("Safe sequence found: " + chart.safeSequence);
-            JFrame frame = new JFrame("Banker's Algorithm Gantt Chart");
+            
+            JFrame frame = new JFrame("Banker's Algorithm Visualization");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.add(chart);
             frame.pack();
